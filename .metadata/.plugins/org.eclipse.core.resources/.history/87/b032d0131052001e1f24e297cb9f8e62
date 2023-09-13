@@ -1,0 +1,10 @@
+package com.cos.security1.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
+@Configuration //메모리에 뜨게 설정
+@EnableWebSecurity //활성화 해주기
+public class SecurityConfig {
+	
+}
