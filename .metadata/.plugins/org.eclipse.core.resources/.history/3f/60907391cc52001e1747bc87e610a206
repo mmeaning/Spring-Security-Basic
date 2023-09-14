@@ -1,0 +1,10 @@
+package com.cos.security1.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.cos.security1.model.User;
+
+//Integer => primary key(ID)의 타입이 Integer니까
+public interface UserRepository extends JpaRepository<User, Integer>{
+
+}

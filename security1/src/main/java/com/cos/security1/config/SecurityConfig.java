@@ -1,13 +1,21 @@
 package com.cos.security1.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration //메모리에 뜨게 설정
 @EnableWebSecurity //활성화 해주기 => 스프링 시큐리티 필터(SecurityConfig)가 스프링 필터체인(기본필터체인)에 등록이 됩니다.
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	//비밀번호 암호화를 빈으로 등록해봅시다.
+	@Bean //@Bean : 해당 메서드의 리턴되는 오브젝트를 IoC로 등록해줍니다.
+	public BCryptPasswordEncoder encodePwd() {
+		return new BCryptPasswordEncoder();
+	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();//비활성화
@@ -21,6 +29,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest().permitAll()
 			.and()
 			.formLogin()
-			.loginPage("/login");
+			.loginPage("/loginForm");
 	}
 }
