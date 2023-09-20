@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();//비활성화
 		http.authorizeRequests()
-			///user/**이 주소로 들어오면 .authenticated()인증이 필요하다.
+			///user/**이 주소로 들어오면 .authenticated()인증이 필요하다. => 인증만 되면 들어갈 수 있는 주소!
 			.antMatchers("/user/**").authenticated()
 			///manager/**이 주소로 들어오면 admin이나 manager라는 권한이 있어야만 들어갈 수 있다.
 			.antMatchers("/manager/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
@@ -29,6 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest().permitAll()
 			.and()
 			.formLogin()
-			.loginPage("/loginForm");
+			.loginPage("/loginForm")
+			.loginProcessingUrl("/login")//login주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해줍니다. => 컨트롤러에 /login을 안만들어도 됩니다.
+			.defaultSuccessUrl("/");//메인 페이지로 이동 => 이거는 좋은 점이 내가 사용하려던 페이지(/user)에서 로그인을 시도하면 로그인 하고나면 그대로 그 페이지로 이동됩니다.(/user)
 	}
 }
